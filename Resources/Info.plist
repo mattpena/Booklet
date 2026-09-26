@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleDisplayName</key>
+    <string>Booklet</string>
+    <key>CFBundleExecutable</key>
+    <string>Booklet</string>
+    <key>CFBundleIconFile</key>
+    <string>Booklet.icns</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.albumbooklet.app</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>Booklet</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.1.0</string>
+    <key>CFBundleVersion</key>
+    <string>31</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.music</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>14.0</string>
+    <key>NSAppleEventsUsageDescription</key>
+    <string>Booklet reads the track currently playing in Spotify so it can show the matching album artwork and liner notes.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Booklet uses your location once to find album releases from your country.</string>
+    <key>NSLocationUsageDescription</key>
+    <string>Booklet uses your location once to find album releases from your country.</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+</dict>
+</plist>

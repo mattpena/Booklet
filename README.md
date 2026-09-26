@@ -55,33 +55,19 @@ The packaged `.app` is recommended when testing Automation permission because it
 
 ## Updates
 
-Booklet uses [Sparkle](https://sparkle-project.org/documentation/) for update checks and installation. Once configured, **Booklet → Check for Updates…** checks on demand; Sparkle also checks daily in the background. By default it asks before installing an available update. Local builds without an update feed remain usable, but do not show the update command or poll for releases.
+Booklet uses [Sparkle](https://sparkle-project.org/documentation/) for update checks and installation. Releases are hosted at [GitHub Releases](https://github.com/mattpena/Booklet/releases), and the signed appcast lives at `https://mattpena.github.io/Booklet/updates/appcast.xml`. A release build checks daily and offers **Booklet → Check for Updates…**. It asks before installing by default. Local builds without a feed remain usable, but do not check for updates.
 
-To enable updates for a release:
+The Sparkle EdDSA private key is stored in this Mac's Keychain under account `booklet`; never commit or upload it. Back it up securely with Sparkle's `generate_keys --account booklet -x <private-key-file>`, then keep the exported file outside this repository. Losing the key can strand ad-hoc-signed installations on their current version.
 
-1. Choose a permanent HTTPS URL for `appcast.xml` and a host for the release ZIPs. Keep that feed URL stable across future builds.
-2. Run `.build/artifacts/sparkle/Sparkle/bin/generate_keys --account booklet` once after `swift package resolve`. Keep the private EdDSA key in your Keychain (and back it up securely); use the printed public key in the build. Never commit the private key.
-3. Sign the app with a **Developer ID Application** identity and notarize it for distribution. Set `BOOKLET_SIGNING_IDENTITY`, `BOOKLET_UPDATE_FEED_URL`, and `BOOKLET_UPDATE_PUBLIC_KEY` when running `./scripts/build-app.sh`. If you have saved notarytool credentials in a Keychain profile, set `BOOKLET_NOTARY_PROFILE` too; the script then notarizes and staples before producing the final ZIP. The feed URL must be HTTPS. Omit both update settings for a local, non-updating build.
-4. Increase `CFBundleVersion` in `Resources/Info.plist` for every release. Copy `outputs/Booklet.zip` into `outputs/releases` under a unique name such as `Booklet-0.1.0-31.zip`, then run Sparkle's `generate_appcast` on that directory to sign the archive and create or update `appcast.xml`. Publish the ZIP and appcast together at the URLs you configured.
+To publish an update:
 
-For example, after replacing the placeholders with your own release host and public key:
+1. Increase `CFBundleVersion` in `Resources/Info.plist` (and `CFBundleShortVersionString` when appropriate).
+2. Commit and push the app changes to `main`.
+3. Run `BOOKLET_SIGNING_IDENTITY='Developer ID Application: …' BOOKLET_NOTARY_PROFILE='…' ./scripts/publish-update.sh`. The script builds, notarizes and staples the app, signs its ZIP and appcast, creates a GitHub Release, and pushes the updated feed. It requires a clean, pushed `main` branch.
 
-```bash
-BOOKLET_SIGNING_IDENTITY='Developer ID Application: Your Name (TEAMID)' \
-BOOKLET_NOTARY_PROFILE='your-notarytool-profile' \
-BOOKLET_UPDATE_FEED_URL='https://updates.example.com/booklet/appcast.xml' \
-BOOKLET_UPDATE_PUBLIC_KEY='YOUR_SPARKLE_PUBLIC_KEY' \
-./scripts/build-app.sh
+There is **no Developer ID certificate configured yet**. The release script therefore refuses to publish by default. For an explicitly accepted personal preview only, `BOOKLET_ALLOW_ADHOC_RELEASE=1 ./scripts/publish-update.sh` publishes an unnotarized pre-release; macOS may warn or require manual approval. Do not treat that path as a public distribution channel.
 
-mkdir -p outputs/releases
-cp outputs/Booklet.zip outputs/releases/Booklet-0.1.0-31.zip
-.build/artifacts/sparkle/Sparkle/bin/generate_appcast \
-  --account booklet \
-  --download-url-prefix 'https://updates.example.com/booklet/' \
-  outputs/releases/
-```
-
-If you do not use `BOOKLET_NOTARY_PROFILE`, notarize and staple the signed app yourself before generating the appcast; repack the ZIP after stapling. Test the update path from an older installed release before relying on it. Existing build 30 has no updater, so installing the first updater-enabled release once is unavoidable. After that, the app can find and install subsequent published releases itself.
+Build 30 predates the updater, so its replacement must be installed manually once. Subsequent releases can be found in-app after a signed feed and an updater-enabled build are published. Test a full update from an older installed version before relying on the channel.
 
 ## Diagnostics
 

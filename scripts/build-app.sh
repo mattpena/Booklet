@@ -52,6 +52,8 @@ if [[ -n "$update_feed_url" ]]; then
     plutil -insert SUFeedURL -string "$update_feed_url" "$contents/Info.plist"
     plutil -insert SUPublicEDKey -string "$update_public_key" "$contents/Info.plist"
     plutil -insert SUEnableAutomaticChecks -bool YES "$contents/Info.plist"
+    plutil -insert SUVerifyUpdateBeforeExtraction -bool YES "$contents/Info.plist"
+    plutil -insert SURequireSignedFeed -bool YES "$contents/Info.plist"
 fi
 
 entitlements="$project_root/Resources/Booklet.entitlements"

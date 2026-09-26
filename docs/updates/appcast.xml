@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><!-- sparkle-sign-warning:
+IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires re-signing this file with generate_appcast or sign_update! The signed signature will be embedded at the end of this file.
+--><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Booklet</title>
+        <link>https://github.com/mattpena/Booklet</link>
+        <description>Booklet for Mac updates</description>
+    </channel>
+</rss><!-- sparkle-signatures:
+edSignature: ep2eX3f1gzbO6Nl2sVLWPAQvfrpD4iIzDTQ8sEdmxfOtkdJrv7LKKw8DfRm+s5ok0+s48eSm9cj+/v7ZbHNGBQ==
+length: 561
+-->

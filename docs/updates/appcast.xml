@@ -9,6 +9,15 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
         <description>Booklet for Mac updates</description>
         <item>
             <title>0.1.0</title>
+            <pubDate>Sun, 27 Sep 2026 00:09:22 -0400</pubDate>
+            <sparkle:version>34</sparkle:version>
+            <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <enclosure url="https://github.com/mattpena/Booklet/releases/download/v0.1.0-34/Booklet-0.1.0-34.zip" length="3927589" type="application/octet-stream" sparkle:edSignature="B1V87pEaWUOpWijG4jBq9soHLJezR3tvPFQqknidBWUvFrniODJewzkpzy4FDSVlE+8xujou97IWTM3wirvSAw=="/>
+        </item>
+        <item>
+            <title>0.1.0</title>
             <pubDate>Sun, 27 Sep 2026 00:03:39 -0400</pubDate>
             <sparkle:version>33</sparkle:version>
             <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
@@ -25,18 +34,9 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
             <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
             <enclosure url="https://github.com/mattpena/Booklet/releases/download/v0.1.0-32/Booklet-0.1.0-32.zip" length="3921278" type="application/octet-stream" sparkle:edSignature="FjhotzBQiIGP1U9UmN+7iTHnkAC+6ik112u0pGxp8WWc3Y4Bjmnz1ZaMcdNE1NCySvzCRVRsU3PH+b+SvEPEDg=="/>
         </item>
-        <item>
-            <title>0.1.0</title>
-            <pubDate>Sat, 26 Sep 2026 23:44:32 -0400</pubDate>
-            <sparkle:version>31</sparkle:version>
-            <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <enclosure url="https://github.com/mattpena/Booklet/releases/download/v0.1.0-31/Booklet-0.1.0-31.zip" length="3921278" type="application/octet-stream" sparkle:edSignature="1oym8Y5AyQg53jlF1xM6PabQCR4Bnaa6XxwzSpEbgqRbb4qekJzmhEhhEMIgBERPfiUu/vdEvc+bCXeIZLA7AQ=="/>
-        </item>
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: LnzWPy/qM/GYnGGQYX2oT+PL/NjVqOb9fTeBrrIQ0/uakZwX1hlm+rQMpqL88aqbev63zZKhIt5h4Q6PhuEJBw==
+edSignature: eStjVoDqPTcRyQkqWoomDORJoS9UJgH2cOW/NTraff6if4zrmBXi79UIJ1H9EgIfufphve9+UnbNVzEhZL3EBQ==
 length: 2619
 -->

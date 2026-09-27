@@ -44,25 +44,26 @@ public_key="$("$sparkle_tools/generate_keys" --account booklet -p)"
 version="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Resources/Info.plist)"
 build="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' Resources/Info.plist)"
 tag="v${version}-${build}"
-archive="$releases_dir/Booklet-${version}-${build}.zip"
+release_dir="$releases_dir/$tag"
+archive="$release_dir/Booklet-${version}-${build}.zip"
 
 BOOKLET_UPDATE_FEED_URL="$feed_url" \
 BOOKLET_UPDATE_PUBLIC_KEY="$public_key" \
 ./scripts/build-app.sh
 
-mkdir -p "$releases_dir" "${feed_path:h}"
+mkdir -p "$release_dir" "${feed_path:h}"
 cp outputs/Booklet.zip "$archive"
 if [[ -f "$feed_path" ]]; then
-    cp "$feed_path" "$releases_dir/appcast.xml"
+    cp "$feed_path" "$release_dir/appcast.xml"
 fi
 
 "$sparkle_tools/generate_appcast" \
     --account booklet \
     --maximum-deltas 0 \
     --download-url-prefix "https://github.com/$repository/releases/download/$tag/" \
-    -o "$releases_dir/appcast.xml" \
-    "$releases_dir"
-"$sparkle_tools/sign_update" --account booklet --verify "$releases_dir/appcast.xml"
+    -o "$release_dir/appcast.xml" \
+    "$release_dir"
+"$sparkle_tools/sign_update" --account booklet --verify "$release_dir/appcast.xml"
 
 gh release create "$tag" "$archive" \
     --repo "$repository" \
@@ -70,7 +71,7 @@ gh release create "$tag" "$archive" \
     --title "Booklet $version (build $build)" \
     "${release_flags[@]}"
 
-cp "$releases_dir/appcast.xml" "$feed_path"
+cp "$release_dir/appcast.xml" "$feed_path"
 git add "$feed_path"
 git commit -m "Publish update feed for $tag"
 git push origin main

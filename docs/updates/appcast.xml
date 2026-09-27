@@ -9,6 +9,15 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
         <description>Booklet for Mac updates</description>
         <item>
             <title>0.1.0</title>
+            <pubDate>Sun, 27 Sep 2026 00:03:39 -0400</pubDate>
+            <sparkle:version>33</sparkle:version>
+            <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <enclosure url="https://github.com/mattpena/Booklet/releases/download/v0.1.0-33/Booklet-0.1.0-33.zip" length="3927485" type="application/octet-stream" sparkle:edSignature="K+5GM2JSdC4KPBocXmeOolDfFI1YEaGTQCowj2GzDtz5TgDsLbnLfD5WHwx776M8+Vlm2w/qlzy9CQRAekPOCA=="/>
+        </item>
+        <item>
+            <title>0.1.0</title>
             <pubDate>Sat, 26 Sep 2026 23:48:26 -0400</pubDate>
             <sparkle:version>32</sparkle:version>
             <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
@@ -28,6 +37,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: P7AVPYNc6uJtMjd7ZZM+mGrB3JQMndJDOLuGbtNS+4TvgxW3ikbOXHwZan7Ds/5ZV8CqhQzkAHT3PRdqC1nlDQ==
-length: 1934
+edSignature: LnzWPy/qM/GYnGGQYX2oT+PL/NjVqOb9fTeBrrIQ0/uakZwX1hlm+rQMpqL88aqbev63zZKhIt5h4Q6PhuEJBw==
+length: 2619
 -->

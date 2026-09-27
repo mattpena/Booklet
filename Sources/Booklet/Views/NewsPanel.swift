@@ -41,12 +41,14 @@ struct NewsPanel: View {
                                     .font(.system(size: 10, weight: .bold, design: .rounded))
                                     .tracking(1)
                                     .foregroundStyle(palette.accent)
-                                Link(article.title, destination: article.url)
-                                    .font(.system(size: 21, weight: .medium, design: .serif))
-                                    .foregroundStyle(BookletTheme.paper)
-                                    .multilineTextAlignment(.leading)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                Link(destination: article.url) {
+                                    Text(article.title)
+                                        .font(.system(size: 21, weight: .medium, design: .serif))
+                                        .foregroundStyle(BookletTheme.paper)
+                                        .multilineTextAlignment(.leading)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.vertical, 18)

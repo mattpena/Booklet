@@ -1,12 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><!-- sparkle-sign-warning:
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- sparkle-sign-warning:
 IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires re-signing this file with generate_appcast or sign_update! The signed signature will be embedded at the end of this file.
---><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+-->
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>Booklet</title>
         <link>https://github.com/mattpena/Booklet</link>
         <description>Booklet for Mac updates</description>
+        <item>
+            <title>0.1.0</title>
+            <pubDate>Sat, 26 Sep 2026 23:44:32 -0400</pubDate>
+            <sparkle:version>31</sparkle:version>
+            <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <enclosure url="https://github.com/mattpena/Booklet/releases/download/v0.1.0-31/Booklet-0.1.0-31.zip" length="3921278" type="application/octet-stream" sparkle:edSignature="1oym8Y5AyQg53jlF1xM6PabQCR4Bnaa6XxwzSpEbgqRbb4qekJzmhEhhEMIgBERPfiUu/vdEvc+bCXeIZLA7AQ=="/>
+        </item>
     </channel>
-</rss><!-- sparkle-signatures:
-edSignature: ep2eX3f1gzbO6Nl2sVLWPAQvfrpD4iIzDTQ8sEdmxfOtkdJrv7LKKw8DfRm+s5ok0+s48eSm9cj+/v7ZbHNGBQ==
-length: 561
+</rss>
+<!-- sparkle-signatures:
+edSignature: lCtu8Pr85ezyf4YezkaQc75PND8AmTGXiDZAK5wSaj3rewZZijxRVtQkOp9vjTyMFRlz9//fRLtK4+RlugUgBw==
+length: 1249
 -->

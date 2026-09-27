@@ -37,20 +37,13 @@ struct AlbumSummaryPanel: View {
                             .foregroundStyle(palette.accent)
 
                         if let summary {
-                            Text(summary.text)
-                                .font(.system(size: 15, weight: .regular, design: .serif))
-                                .foregroundStyle(BookletTheme.paper)
-                                .lineSpacing(6)
-                                .textSelection(.enabled)
-                            Link("Read the full article ↗", destination: summary.articleURL)
-                                .font(.system(size: 12, weight: .semibold))
-                                .foregroundStyle(palette.accent)
-                            Text("From “\(summary.title)” by Wikipedia contributors · CC BY-SA 4.0")
-                                .font(.system(size: 10))
-                                .foregroundStyle(BookletTheme.mutedPaper)
-                            Link("License", destination: URL(string: "https://creativecommons.org/licenses/by-sa/4.0/")!)
-                                .font(.system(size: 10))
-                                .foregroundStyle(BookletTheme.mutedPaper)
+                            ForEach(Array(paragraphs(in: summary.text).enumerated()), id: \.offset) { _, paragraph in
+                                Text(paragraph)
+                                    .font(.system(size: 15, weight: .regular, design: .serif))
+                                    .foregroundStyle(BookletTheme.paper)
+                                    .lineSpacing(6)
+                                    .textSelection(.enabled)
+                            }
                         } else if isLoading {
                             ProgressView("Finding the album story…")
                                 .tint(palette.accent)
@@ -66,6 +59,32 @@ struct AlbumSummaryPanel: View {
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
+                }
+
+                if let summary {
+                    ForEach(Array(summary.sections.enumerated()), id: \.offset) { _, section in
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text(section.title)
+                                .font(.system(size: 22, weight: .medium, design: .serif))
+                                .foregroundStyle(BookletTheme.paper)
+                            ForEach(Array(paragraphs(in: section.text).enumerated()), id: \.offset) { _, paragraph in
+                                Text(paragraph)
+                                    .font(.system(size: 15, design: .serif))
+                                    .foregroundStyle(BookletTheme.paper)
+                                    .lineSpacing(7)
+                                    .textSelection(.enabled)
+                            }
+                        }
+                    }
+                    Link("Read the full article ↗", destination: summary.articleURL)
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(palette.accent)
+                    Text("From “\(summary.title)” by Wikipedia contributors · CC BY-SA 4.0")
+                        .font(.system(size: 10))
+                        .foregroundStyle(BookletTheme.mutedPaper)
+                    Link("License", destination: URL(string: "https://creativecommons.org/licenses/by-sa/4.0/")!)
+                        .font(.system(size: 10))
+                        .foregroundStyle(BookletTheme.mutedPaper)
                 }
 
                 Text("Album background is independent of the selected physical-release country. Packaging scans remain country-specific.")
@@ -104,5 +123,11 @@ struct AlbumSummaryPanel: View {
         let title = TextNormalization.originalEditionTitle(from: track.album) ?? track.album
         components.queryItems = [URLQueryItem(name: "search", value: "\(title) \(track.albumArtist.isEmpty ? track.artist : track.albumArtist) album")]
         return components.url!
+    }
+
+    private func paragraphs(in text: String) -> [String] {
+        text.components(separatedBy: .newlines)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
     }
 }

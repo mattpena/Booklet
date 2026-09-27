@@ -15,7 +15,7 @@ No Spotify Developer account, API key, client ID, or Spotify login is required.
 - Candidate ranking that strongly prefers releases with actual `Booklet` scans
 - Deluxe, anniversary, and remastered-edition fallback to original-title scans when the selected country's edition has no booklet, without substituting a foreign edition
 - Ordered Cover Art Archive pages, thumbnail navigation, horizontal paging, window-level arrow-key navigation, and in-panel zoom controls with trackpad pinch and double-click reset
-- An Album tab with a conservatively matched Wikipedia summary that prefers the original album story for deluxe, anniversary, and remastered editions, available alongside the booklet and shown by default when no booklet scan exists
+- An Album tab with a conservatively matched Wikipedia article introduction and available history, recording, release, and reception sections; it prefers the original album story for deluxe, anniversary, and remastered editions and is shown by default when no booklet scan exists
 - A Track tab that prefers the original song article for remastered tracks, including available recording, music-video, and live-performance sections beyond its short summary, with distinct paragraph spacing; unavailable tracks show a clear empty state instead of generated copy
 - A News tab that renders recent Google News RSS headlines for the current artist inside Booklet, with publisher names, dates, and links to the full results
 - A scrollable Now Playing sidebar with available MusicBrainz recording credits (writers, performers, recording location) and transport controls pinned to the bottom

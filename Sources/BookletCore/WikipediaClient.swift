@@ -4,21 +4,9 @@ public struct AlbumSummary: Equatable, Sendable {
     public let title: String
     public let text: String
     public let articleURL: URL
+    public let sections: [ArticleSection]
 
-    public init(title: String, text: String, articleURL: URL) {
-        self.title = title
-        self.text = text
-        self.articleURL = articleURL
-    }
-}
-
-public struct TrackStory: Equatable, Sendable {
-    public let title: String
-    public let text: String
-    public let articleURL: URL
-    public let sections: [TrackStorySection]
-
-    public init(title: String, text: String, articleURL: URL, sections: [TrackStorySection] = []) {
+    public init(title: String, text: String, articleURL: URL, sections: [ArticleSection] = []) {
         self.title = title
         self.text = text
         self.articleURL = articleURL
@@ -26,7 +14,21 @@ public struct TrackStory: Equatable, Sendable {
     }
 }
 
-public struct TrackStorySection: Equatable, Sendable {
+public struct TrackStory: Equatable, Sendable {
+    public let title: String
+    public let text: String
+    public let articleURL: URL
+    public let sections: [ArticleSection]
+
+    public init(title: String, text: String, articleURL: URL, sections: [ArticleSection] = []) {
+        self.title = title
+        self.text = text
+        self.articleURL = articleURL
+        self.sections = sections
+    }
+}
+
+public struct ArticleSection: Equatable, Sendable {
     public let title: String
     public let text: String
 
@@ -60,7 +62,11 @@ public struct WikipediaClient: Sendable {
             let results = try JSONDecoder().decode(SearchResponse.self, from: await request(search.url!))
             guard let page = Self.bestPage(in: results.pages, title: title, artist: artist),
                   let article = try await article(for: page) else { continue }
-            return AlbumSummary(title: article.title, text: article.text, articleURL: article.url)
+            let extract = try? await fullExtract(for: page)
+            let introduction = extract.flatMap(Self.introduction)
+            let text = introduction.flatMap { $0.count > article.text.count ? $0 : nil } ?? article.text
+            let sections = extract.map(Self.sections) ?? []
+            return AlbumSummary(title: article.title, text: text, articleURL: article.url, sections: sections)
         }
         return nil
     }
@@ -154,13 +160,13 @@ public struct WikipediaClient: Sendable {
         }
     }
 
-    static func sections(from extract: String) -> [TrackStorySection] {
+    static func sections(from extract: String) -> [ArticleSection] {
         let ignoredTitles: Set<String> = [
             "references", "notes", "external links", "see also", "further reading",
             "track listing", "track listings", "charts", "chart performance",
             "weekly charts", "year end charts", "certifications", "release history",
         ]
-        var sections: [TrackStorySection] = []
+        var sections: [ArticleSection] = []
         var currentTitle: String?
         var currentLines: [String] = []
         var ignoredDepth: Int?
@@ -175,7 +181,7 @@ public struct WikipediaClient: Sendable {
                 .filter { !$0.isEmpty }
             let selected = Array(paragraphs.prefix(3)).joined(separator: "\n")
             guard !selected.isEmpty else { return }
-            sections.append(TrackStorySection(title: currentTitle, text: selected))
+            sections.append(ArticleSection(title: currentTitle, text: selected))
         }
 
         for line in extract.components(separatedBy: .newlines) {

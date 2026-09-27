@@ -207,6 +207,7 @@ func wikipediaAlbumSummary() async throws {
     #expect(summary.title == "Moonlight (Artist album)")
     #expect(summary.text == "Moonlight is an album by Artist.")
     #expect(summary.articleURL.absoluteString == "https://en.wikipedia.org/wiki/Moonlight_(Artist_album)")
+    #expect(summary.sections.isEmpty)
 }
 
 @Test("Anniversary album stories use the original album article")
@@ -225,6 +226,9 @@ func wikipediaOasisDeluxeAlbumSummary() async throws {
     let summary = try #require(await WikipediaClient(session: oasisAlbumStubSession()).summary(for: album))
     #expect(summary.title == "Definitely Maybe")
     #expect(summary.articleURL.absoluteString == "https://en.wikipedia.org/wiki/Definitely_Maybe")
+    #expect(summary.text.contains("recording sessions"))
+    #expect(summary.sections.map(\.title) == ["Recording", "Release and reception"])
+    #expect(summary.sections[0].text.contains("Monnow Valley Studio"))
 }
 
 @Test("Wikipedia track stories require the matching song and artist")
@@ -389,21 +393,38 @@ private final class OasisAlbumStubURLProtocol: URLProtocol {
         let path = request.url?.path ?? ""
         let query = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)?
             .queryItems?.first(where: { $0.name == "q" })?.value
-        let json: String
+        let data: Data
         if path.hasSuffix("/search/page") {
-            json = query == "Definitely Maybe Oasis album"
+            let json = query == "Definitely Maybe Oasis album"
                 ? """
                   {"pages":[{"key":"Definitely_Maybe","title":"Definitely Maybe","description":"1994 studio album by Oasis","excerpt":"Definitely Maybe is the debut studio album by Oasis"}]}
                   """
                 : "{\"pages\":[]}"
+            data = Data(json.utf8)
+        } else if path.hasSuffix("/api.php") {
+            let extract = """
+            Definitely Maybe is the debut studio album by Oasis.
+            Its recording sessions brought together songs written before the band's breakthrough.
+
+            == Recording ==
+            The band recorded the album at Monnow Valley Studio before completing it elsewhere.
+
+            == Track listing ==
+            A list of songs that should not appear in the Album tab.
+
+            == Release and reception ==
+            The album's release was followed by reviews and a growing audience in the United Kingdom.
+            """
+            data = try! JSONSerialization.data(withJSONObject: ["query": ["pages": [["extract": extract]]]])
         } else {
-            json = """
+            let json = """
             {"title":"Definitely Maybe","extract":"Definitely Maybe is the debut studio album by Oasis.","type":"standard","content_urls":{"desktop":{"page":"https://en.wikipedia.org/wiki/Definitely_Maybe"}}}
             """
+            data = Data(json.utf8)
         }
         let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-        client?.urlProtocol(self, didLoad: Data(json.utf8))
+        client?.urlProtocol(self, didLoad: data)
         client?.urlProtocolDidFinishLoading(self)
     }
 
